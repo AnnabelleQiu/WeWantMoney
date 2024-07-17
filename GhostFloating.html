@@ -6,8 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Animation</title>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6f2; /* Light pink background */
+            font-family: Arial, sans-serif;
+        }
+
         svg {
-            border: 1px solid black;
+            border: 2px solid #ff69b4; /* Pink border */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2); /* Pink shadow */
+            background-color: #ffccdd; /* Light pink background inside the SVG */
+        }
+
+        #redGhost {
+            transition: transform 0.2s ease-in-out; /* Smooth transition for ghost movement */
+        }
+
+        #redGhost:hover {
+            transform: scale(1.1); /* Slightly enlarge the ghost on hover */
+        }
+
+
+        #leftPupil, #rightPupil {
+            fill: #000000; /* Deep pink pupils */
+        }
+
+        text {
+            fill: #ff69b4; /* Pink text */
+            font-size: 24px;
+            text-anchor: middle;
+            dominant-baseline: middle;
         }
     </style>
 </head>
@@ -23,21 +57,60 @@
                 <circle cx="100" cy="160" r="20"/>
                 <circle cx="35" cy="60" r="10" fill="white" />
                 <circle cx="85" cy="60" r="10" fill="white" />
-                <circle cx="40" cy="60" r="5" fill="blue" />
-                <circle cx="90" cy="60" r="5" fill="blue" />
+                <circle id="leftPupil" cx="35" cy="60" r="5" fill="blue" />
+                <circle id="rightPupil" cx="85" cy="60" r="5" fill="blue" />
             </g>
         </defs>
     </svg>
     <script>
         let ghost = document.getElementById("redGhost");
-        let x = 260; //You'll want the x-coordinate of the mouse to be a global variable
-        let y = 260; //You'll want the y-coordinate of the mouse to be a global variable
+        let leftPupil = document.getElementById("leftPupil");
+        let rightPupil = document.getElementById("rightPupil");
+        let x = 260; // You'll want the x-coordinate of the mouse to be a global variable
+        let y = 260; // You'll want the y-coordinate of the mouse to be a global variable
 
         /** You'll want to create a mousemove event listener that publishes the current
         mouse coordinate values to these global x and y variables */
+        document.addEventListener('mousemove', function(event) {
+            x = event.clientX;
+            y = event.clientY;
+        });
 
         /** You'll want to create a set interval callback that moves the ghost
         towards these mouse coordinates **/
+        function moveGhost() {
+            let ghostX = parseFloat(ghost.getAttribute("x"));
+            let ghostY = parseFloat(ghost.getAttribute("y"));
+
+            // Calculate the distance to move
+            let dx = (x - ghostX) * 0.05;
+            let dy = (y - ghostY) * 0.05;
+
+            // Update the ghost's position
+            ghost.setAttribute("x", ghostX + dx);
+            ghost.setAttribute("y", ghostY + dy);
+
+            // Update the eyes' direction
+            updateEyes(ghostX + dx, ghostY + dy);
+        }
+
+        function updateEyes(ghostX, ghostY) {
+            let ghostCenterX = ghostX + 60;
+            let ghostCenterY = ghostY + 60;
+
+            let angleLeft = Math.atan2(y - ghostCenterY, x - (ghostCenterX - 25));
+            let angleRight = Math.atan2(y - ghostCenterY, x - (ghostCenterX + 25));
+
+            let pupilRadius = 5;
+            let eyeRadius = 10;
+
+            leftPupil.setAttribute("cx", 35 + Math.cos(angleLeft) * (eyeRadius - pupilRadius));
+            leftPupil.setAttribute("cy", 60 + Math.sin(angleLeft) * (eyeRadius - pupilRadius));
+            rightPupil.setAttribute("cx", 85 + Math.cos(angleRight) * (eyeRadius - pupilRadius));
+            rightPupil.setAttribute("cy", 60 + Math.sin(angleRight) * (eyeRadius - pupilRadius));
+        }
+
+        setInterval(moveGhost, 20);
 
         /* In the callback function, you should be able to get the current "x" attribute
         of the ghost by using ghost.getAttribute("x"), and you should be able to set the 
