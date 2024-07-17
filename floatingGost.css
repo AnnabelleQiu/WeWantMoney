@@ -1,49 +1,41 @@
 body {
     margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
-    background-color: #f0f8ff;
-    overflow: hidden;
-    cursor: none;
-  }
-  
-  #dog {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: #ffcc00;
-    border-radius: 50% 50% 0 0;
-    transform-origin: center bottom;
-    transition: transform 0.1s;
-  }
-  
-  #dog::before,
-  #dog::after {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: #ffcc00;
-    border-radius: 50%;
-    top: -10px;
-  }
-  
-  #dog::before {
-    left: 5px;
-  }
-  
-  #dog::after {
-    right: 5px;
-  }
-  
-  #dog::before::before,
-  #dog::after::before {
-    content: '';
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: #000;
-    border-radius: 50%;
-    top: 4px;
-    left: 5px;
-  }
-  
+    background-color: #ffe6f2; /* Light pink background */
+    font-family: Arial, sans-serif;
+}
+
+svg {
+    border: 2px solid #ff69b4; /* Pink border */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2); /* Pink shadow */
+    background-color: #ffccdd; /* Light pink background inside the SVG */
+}
+
+#redGhost {
+    transition: transform 0.2s ease-in-out; /* Smooth transition for ghost movement */
+}
+
+#redGhost:hover {
+    transform: scale(1.1); /* Slightly enlarge the ghost on hover */
+}
+
+circle {
+    stroke: #ff69b4; /* Pink stroke for circles */
+    stroke-width: 2;
+}
+
+#leftPupil, #rightPupil {
+    fill: #ff1493; /* Deep pink pupils */
+}
+
+text {
+    fill: #ff69b4; /* Pink text */
+    font-size: 24px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}

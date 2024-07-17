@@ -10,6 +10,46 @@
             border: 1px solid black;
         }
     </style>
+    <title>Ghost Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6f2; /* Light pink background */
+            font-family: Arial, sans-serif;
+        }
+
+        svg {
+            border: 2px solid #ff69b4; /* Pink border */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2); /* Pink shadow */
+            background-color: #ffccdd; /* Light pink background inside the SVG */
+        }
+
+        #redGhost {
+            transition: transform 0.2s ease-in-out; /* Smooth transition for ghost movement */
+        }
+
+        #redGhost:hover {
+            transform: scale(1.1); /* Slightly enlarge the ghost on hover */
+        }
+
+
+        #leftPupil, #rightPupil {
+            fill: #000000; /* Deep pink pupils */
+        }
+
+        text {
+            fill: #ff69b4; /* Pink text */
+            font-size: 24px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style>
 </head>
 <body>
     <svg id="canvas" width="1000" height="600" viewbox="0 0 1000 600">
