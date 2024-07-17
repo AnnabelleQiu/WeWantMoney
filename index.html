@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Animation</title>
     <style>
-        svg {
-            border: 1px solid black;
-        }
-    </style>
-    <title>Ghost Animation</title>
-    <style>
         body {
             margin: 0;
             padding: 0;
@@ -38,7 +32,6 @@
             transform: scale(1.1); /* Slightly enlarge the ghost on hover */
         }
 
-
         #leftPupil, #rightPupil {
             fill: #000000; /* Deep pink pupils */
         }
@@ -52,7 +45,7 @@
     </style>
 </head>
 <body>
-    <svg id="canvas" width="1000" height="600" viewbox="0 0 1000 600">
+    <svg id="canvas" width="1000" height="600" viewBox="0 0 1000 600">
         <use id="redGhost" x="200" y="200" href="#ghost" fill="red"/>
         <defs>
             <g id="ghost">
@@ -70,20 +63,32 @@
     </svg>
     <script>
         let ghost = document.getElementById("redGhost");
-        let x = 260; //You'll want the x-coordinate of the mouse to be a global variable
-        let y = 260; //You'll want the y-coordinate of the mouse to be a global variable
+        let targetX = 200;
+        let targetY = 200;
 
-        /** You'll want to create a mousemove event listener that publishes the current
-        mouse coordinate values to these global x and y variables */
+        document.addEventListener("mousemove", (event) => {
+            targetX = event.clientX - 60; // Adjusting for the center of the ghost
+            targetY = event.clientY - 60; // Adjusting for the center of the ghost
+        });
 
-        /** You'll want to create a set interval callback that moves the ghost
-        towards these mouse coordinates **/
+        function moveGhost() {
+            let currentX = parseFloat(ghost.getAttribute("x"));
+            let currentY = parseFloat(ghost.getAttribute("y"));
 
-        /* In the callback function, you should be able to get the current "x" attribute
-        of the ghost by using ghost.getAttribute("x"), and you should be able to set the 
-        "x" attribute of the ghost to a value using ghost.setAttribute("x", value). The 
-        same is true for "y". */
-        
+            // Calculate the distance to move
+            let dx = targetX - currentX;
+            let dy = targetY - currentY;
+
+            // Move a fraction of the distance (e.g., 10%)
+            ghost.setAttribute("x", currentX + dx * 0.1);
+            ghost.setAttribute("y", currentY + dy * 0.1);
+
+            // Call the function again after a short delay
+            requestAnimationFrame(moveGhost);
+        }
+
+        // Start the ghost movement
+        moveGhost();
     </script>
 </body>
 </html>
